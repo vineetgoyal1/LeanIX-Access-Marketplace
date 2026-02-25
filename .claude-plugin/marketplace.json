@@ -1,9 +1,35 @@
 {
   "name": "LeanIX-Access-Marketplace",
-  "description": "LeanIX API access tools and skills - GraphQL and REST API for enterprise architecture management",
-  "version": "1.0.0",
-  "author": {
+  "owner": {
     "name": "Vineet Goyal",
     "email": "vineet.goyal@sap.com"
-  }
+  },
+  "metadata": {
+    "description": "LeanIX API access tools and skills - GraphQL and REST API for enterprise architecture management",
+    "version": "1.0.0",
+    "pluginRoot": "./plugins"
+  },
+  "plugins": [
+    {
+      "name": "leanix-graphql",
+      "source": "./plugins/leanix-graphql",
+      "description": "Use LeanIX GraphQL API for querying and managing enterprise architecture data. Trigger this skill when you need to get providers from LeanIX, create or update fact sheets (Applications, Providers, ITComponents, etc.), search with filters, find data quality issues, manage relations, handle pagination, or perform any LeanIX data operations.",
+      "version": "1.0.0",
+      "author": {
+        "name": "Vineet Goyal",
+        "email": "vineet.goyal@sap.com"
+      },
+      "keywords": [
+        "leanix",
+        "graphql",
+        "api",
+        "fact-sheet",
+        "provider",
+        "application",
+        "enterprise-architecture",
+        "query",
+        "mutation"
+      ]
+    }
+  ]
 }
