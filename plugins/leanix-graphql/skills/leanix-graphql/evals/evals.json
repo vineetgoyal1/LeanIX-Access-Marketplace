@@ -1,0 +1,137 @@
+{
+  "skill_name": "leanix-graphql",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Write a Python script that queries all providers from LeanIX and displays their names and completion percentages. Use environment variables for authentication.",
+      "expected_output": "Python script that uses LeanIX GraphQL API with OAuth2 authentication, pagination, and proper error handling",
+      "files": [],
+      "assertions": [
+        "The script uses environment variables for LEANIX_SUBDOMAIN and LEANIX_API_TOKEN",
+        "The script implements OAuth2 token exchange",
+        "The script uses GraphQL query with pagination (pageInfo, hasNextPage, endCursor)",
+        "The script checks for GraphQL errors in the response",
+        "The script queries Provider fact sheet type with facet filter",
+        "The output includes completion percentage field"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "I need to find all providers in LeanIX that are missing descriptions. Show me how to query for them.",
+      "expected_output": "GraphQL query with facet filter for DataQuality",
+      "files": [],
+      "assertions": [
+        "The response includes a GraphQL query (not just explanation)",
+        "The query uses facetFilters with FactSheetTypes for Provider",
+        "The query uses DataQuality facet with _noDescription_ key",
+        "The query includes pagination support (pageInfo, hasNextPage, endCursor)",
+        "Variables are used instead of hardcoded values"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "Create a Python function that creates multiple providers in LeanIX using batch mutations. It should create 3 providers: 'Provider A', 'Provider B', and 'Provider C', each with a description. Include error handling for batch failures.",
+      "expected_output": "Python function using mutation aliases with fallback to individual creation on error",
+      "files": [],
+      "assertions": [
+        "The function uses mutation aliases (p1, p2, p3 or similar)",
+        "All three mutations are in a single GraphQL request",
+        "The function checks for GraphQL errors in response",
+        "The function includes fallback logic for batch failure (transaction rollback handling)",
+        "The function uses JSON Patch operations for description field",
+        "The function uses variables or proper string formatting for mutations"
+      ]
+    },
+    {
+      "id": 4,
+      "prompt": "Show me how to update a provider's description in LeanIX using GraphQL. The provider ID is stored in a variable.",
+      "expected_output": "GraphQL updateFactSheet mutation with JSON Patch replace operation",
+      "files": [],
+      "assertions": [
+        "The response uses updateFactSheet mutation",
+        "The mutation uses JSON Patch with op: replace",
+        "The path is /description",
+        "The mutation uses variables (not string interpolation)",
+        "The response explains to check for errors field"
+      ]
+    },
+    {
+      "id": 5,
+      "prompt": "I want to search for applications in LeanIX that have 'unreasonable' technical suitability and are in the 'phaseIn' lifecycle phase. How do I query for these?",
+      "expected_output": "GraphQL query with multiple facet filters including lifecycle with date filter",
+      "files": [],
+      "assertions": [
+        "The query filters for Application fact sheet type",
+        "The query includes technicalSuitability facet filter with 'unreasonable' key",
+        "The query includes lifecycle facet filter with 'phaseIn' key",
+        "The query uses type-specific fields with GraphQL fragment (... on Application)",
+        "The response mentions that multiple facets are combined with AND logic"
+      ]
+    },
+    {
+      "id": 6,
+      "prompt": "How do I create an Application in LeanIX with an external ID from ServiceNow? The external ID is 'INC0012345'.",
+      "expected_output": "GraphQL createFactSheet mutation with externalId in correct JSON string format",
+      "files": [],
+      "assertions": [
+        "The mutation uses createFactSheet",
+        "The externalId is in JSON string format: {\\\"type\\\":\\\"ExternalId\\\",\\\"externalId\\\":\\\"INC0012345\\\"}",
+        "The externalId is added via patches with op: add",
+        "The path is /externalId",
+        "The response warns about the specific JSON string format requirement"
+      ]
+    },
+    {
+      "id": 7,
+      "prompt": "I need to filter LeanIX applications that have both 'Production' and 'Beta' tags. The tag IDs are 6c8d1073-0724-4582-97bd-c972e85be0cb and 1c9c71b0-db60-453e-b607-05471c4f839a.",
+      "expected_output": "GraphQL query with tag filtering using AND operator and tag IDs",
+      "files": [],
+      "assertions": [
+        "The query uses _TAGS_ facet key",
+        "The operator is AND (not OR)",
+        "The keys array contains the two tag IDs",
+        "The query warns that tag IDs (not names) must be used",
+        "The response mentions querying allTags to get tag IDs"
+      ]
+    },
+    {
+      "id": 8,
+      "prompt": "Show me how to update an application's lifecycle in LeanIX. I want to change the phaseIn start date to 2024-06-01, but keep all other phases the same.",
+      "expected_output": "GraphQL mutation with critical warning about including ALL lifecycle phases",
+      "files": [],
+      "assertions": [
+        "The response includes a CRITICAL WARNING about all-or-nothing lifecycle updates",
+        "The mutation includes ALL five lifecycle phases (plan, phaseIn, active, phaseOut, endOfLife)",
+        "The value is a JSON string with all phases",
+        "The response explicitly states that omitted phases will be deleted",
+        "The op is replace (not add)"
+      ]
+    },
+    {
+      "id": 9,
+      "prompt": "I have an application in LeanIX that intentionally has no parent application. How do I mark this so it doesn't hurt the completion score?",
+      "expected_output": "GraphQL mutation using naFields to mark relToParent as intentionally empty",
+      "files": [],
+      "assertions": [
+        "The response explains naFields concept",
+        "The mutation adds relToParent to naFields array",
+        "The value is a JSON array string: [\\\"relToParent\\\"]",
+        "The response explains this improves completion score",
+        "The response mentions that intentionally empty fields count as complete"
+      ]
+    },
+    {
+      "id": 10,
+      "prompt": "How do I retrieve audit logs for an application to see who approved the quality seal?",
+      "expected_output": "GraphQL allLogEvents query with QUALITY_SEAL_APPROVED event type",
+      "files": [],
+      "assertions": [
+        "The query uses allLogEvents",
+        "The factSheetId parameter is included",
+        "The eventTypes filter includes QUALITY_SEAL_APPROVED",
+        "The response includes createdAt field for tracking expiration",
+        "The response mentions using this for quality seal expiration tracking"
+      ]
+    }
+  ]
+}

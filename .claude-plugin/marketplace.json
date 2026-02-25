@@ -1,0 +1,9 @@
+{
+  "name": "LeanIX-Access-Marketplace",
+  "description": "LeanIX API access tools and skills - GraphQL and REST API for enterprise architecture management",
+  "version": "1.0.0",
+  "author": {
+    "name": "Vineet Goyal",
+    "email": "vineet.goyal@sap.com"
+  }
+}
